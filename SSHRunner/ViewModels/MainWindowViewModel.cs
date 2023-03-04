@@ -24,9 +24,9 @@ namespace SSHRunner.ViewModels
 
         #region CloseApplicationCommand
 
-        //public ICommand CloseApplicationCommand { get; }
-        //public bool CanCloseApplicationCommandExecute(object p) => true;
-        //public void OnCloseApplicationCommandExecuted(object p) => Application.Current.Shutdown();
+        public ICommand CloseApplicationCommand { get; }
+        public bool CanCloseApplicationCommandExecute(object p) => true;
+        public void OnCloseApplicationCommandExecuted(object p) => Application.Current.Shutdown();
 
         #endregion
 
@@ -36,7 +36,7 @@ namespace SSHRunner.ViewModels
         {
             #region Command
 
-            //CloseApplicationCommand = new LambdaCommand(OnCloseApplicationCommandExecuted, CanCloseApplicationCommandExecute);
+            CloseApplicationCommand = new LambdaCommand(OnCloseApplicationCommandExecuted, CanCloseApplicationCommandExecute);
 
             #endregion
         }

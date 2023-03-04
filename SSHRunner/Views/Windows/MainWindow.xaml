@@ -10,11 +10,8 @@
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
-    <Window.Resources>
-        <cmd:CloseApplicationCommand x:Key="CloseApplicationCommand"/> <!-- For StaticResource -->
-    </Window.Resources>
     <Grid>
-        <Button Width="90" Height="30" Command="{StaticResource CloseApplicationCommand}">
+        <Button Width="90" Height="30" Command="{Binding CloseApplicationCommand}">
             <TextBlock>Close</TextBlock>
         </Button>
     </Grid>
