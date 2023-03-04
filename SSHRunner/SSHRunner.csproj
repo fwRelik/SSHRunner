@@ -13,4 +13,8 @@
     <Folder Include="Services\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="fwRelik.SSHSetup" Version="1.0.0" />
+  </ItemGroup>
+
 </Project>

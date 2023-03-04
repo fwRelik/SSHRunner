@@ -6,13 +6,228 @@
         xmlns:cmd="clr-namespace:SSHRunner.Infrastructure.Commands"
         xmlns:vm="clr-namespace:SSHRunner.ViewModels"
         xmlns:local="clr-namespace:SSHRunner"
-        Title="{Binding Title}" Height="450" Width="800">
+        Title="{Binding Title}" 
+        Height="600" 
+        Width="400" 
+        FontFamily="Montserrat" 
+        Background="#FF232323" 
+        ResizeMode="NoResize" >
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
-    <Grid>
-        <Button Width="90" Height="30" Command="{Binding CloseApplicationCommand}">
-            <TextBlock>Close</TextBlock>
-        </Button>
+    <Grid Cursor="Hand">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Button 
+            Command="{Binding CloseApplicationCommand}"
+            FontFamily="Segoe MDL2 Assets" 
+            Content="&#xE711;"
+            Foreground="#FF444444" 
+            Height="40" Width="40" 
+            HorizontalAlignment="Right" 
+            VerticalAlignment="Top" 
+            Grid.Column="9" 
+            Background="{x:Null}" 
+            BorderBrush="{x:Null}" FontSize="18" Cursor="Hand"/>
+
+        <Grid Grid.ColumnSpan="8" Margin="0,40,0,15" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+
+            <Label Foreground="#FF909090" BorderBrush="#FF909090" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18" Margin="-5,0,0,0">
+                <TextBlock TextDecorations="Underline">Module state</TextBlock>
+            </Label>
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Grid>
+                    <Ellipse x:Name="SSHServiceIndicator" Width="10" Fill="#FF717171" Height="10" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left">
+                        <Ellipse.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform X="-1" Y="-2"/>
+                            </TransformGroup>
+                        </Ellipse.RenderTransform>
+                    </Ellipse>
+                    <TextBlock FontSize="14" Foreground="#FF909090" Margin="20,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <TextBlock.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform Y="-1"/>
+                            </TransformGroup>
+                        </TextBlock.RenderTransform>SSH Service</TextBlock>
+                </Grid>
+                <Grid Grid.Column="1">
+                    <Ellipse x:Name="FirewallIndicator" Width="10" Fill="#FF717171" Height="10" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left">
+                        <Ellipse.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform X="-1" Y="-2"/>
+                            </TransformGroup>
+                        </Ellipse.RenderTransform>
+                    </Ellipse>
+                    <TextBlock FontSize="14" Foreground="#FF909090" Margin="20,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <TextBlock.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform Y="-1"/>
+                            </TransformGroup>
+                        </TextBlock.RenderTransform>Firewall</TextBlock>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Ellipse x:Name="PackagesIndicator" Width="10" Fill="#FF717171" Height="10" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left">
+                        <Ellipse.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform X="-1" Y="-2"/>
+                            </TransformGroup>
+                        </Ellipse.RenderTransform>
+                    </Ellipse>
+                    <TextBlock FontSize="14" Foreground="#FF909090" Margin="20,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <TextBlock.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform Y="-1"/>
+                            </TransformGroup>
+                        </TextBlock.RenderTransform>Packages</TextBlock>
+                </Grid>
+                <Grid Grid.Row="1" Grid.Column="1">
+                    <Ellipse x:Name="NetworkIndicator" Width="10" Fill="#FF717171" Height="10" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left">
+                        <Ellipse.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform X="-1" Y="-2"/>
+                            </TransformGroup>
+                        </Ellipse.RenderTransform>
+                    </Ellipse>
+                    <TextBlock FontSize="14" Foreground="#FF909090" Margin="20,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <TextBlock.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform Y="-1"/>
+                            </TransformGroup>
+                        </TextBlock.RenderTransform>Network</TextBlock>
+                </Grid>
+            </Grid>
+        </Grid>
+
+        <Line X1="320" Stroke="#FF444444" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="8"/>
+
+        <Grid Grid.ColumnSpan="8" Grid.Column="1" Grid.Row="1" Margin="0,15,0,15">
+            <Grid.RowDefinitions>
+                <RowDefinition  Height="40"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Label Foreground="#FF909090" BorderBrush="#FF909090" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18" Margin="-5,0,0,0">
+                <TextBlock TextDecorations="Underline">Host Information</TextBlock>
+            </Label>
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock FontWeight="SemiBold" Foreground="#FF909090">Host name:</TextBlock>
+                <TextBlock x:Name="TextBlock_HostName" FontWeight="Light" Foreground="#FF909090" Grid.Column="1">LocalMachine</TextBlock>
+
+                <TextBlock FontWeight="SemiBold" Foreground="#FF909090" Grid.Row="1">User name:</TextBlock>
+                <TextBlock x:Name="TextBlock_UserName" FontWeight="Light" Foreground="#FF909090" Grid.Column="1" Grid.Row="1">UserAdmin</TextBlock>
+
+                <TextBlock FontWeight="SemiBold" Foreground="#FF909090" Grid.Row="2">Server local IP address:</TextBlock>
+                <TextBlock x:Name="TextBlock_LocalAddress" FontWeight="Light" Foreground="#FF909090" Grid.Column="1" Grid.Row="3">192.168.1.110</TextBlock>
+            </Grid>
+        </Grid>
+
+        <Line X1="320" Stroke="#FF444444" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="8"/>
+
+        <Grid Grid.ColumnSpan="8" Grid.Column="1" Grid.Row="2" Margin="0,15,0,0" Grid.RowSpan="2" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition MaxHeight="200" Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Label Foreground="#FF909090" BorderBrush="#FF909090" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18" Margin="-5,0,0,0">
+                <TextBlock TextDecorations="Underline">Connection Information</TextBlock>
+            </Label>
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock FontWeight="SemiBold" Foreground="#FF909090" TextDecorations="Underline">Local Address</TextBlock>
+                <TextBlock FontWeight="SemiBold" Foreground="#FF909090" Grid.Column="1" TextDecorations="Underline" Padding="0,0,40,0">Remote Address</TextBlock>
+                <TextBlock FontWeight="SemiBold" Foreground="#FF909090" Grid.Column="2" TextDecorations="Underline">State</TextBlock>
+
+                <TextBlock FontWeight="Light" Foreground="#FF909090" Grid.Row="1">192.168.1.110</TextBlock>
+                <TextBlock FontWeight="Light" Foreground="#FF909090" Grid.Column="1" Grid.Row="1">UserAdmin</TextBlock>
+                <TextBlock FontWeight="Light" Foreground="#FF909090" Grid.Column="2" Grid.Row="1">Enabled</TextBlock>
+            </Grid>
+        </Grid>
+
+        <Line X1="320" Stroke="#FF444444" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="8"/>
+
+        <Grid Grid.ColumnSpan="8" Grid.Column="1" Grid.Row="3" Margin="0,15,0,0">
+            <Button Command="{Binding StartSSHServiceCommand}" 
+                    Width="80" Height="30" 
+                    VerticalAlignment="Bottom" 
+                    HorizontalAlignment="Right" 
+                    Margin="0,0,0,40">
+                <TextBlock>Start Service</TextBlock>
+            </Button>
+        </Grid>
     </Grid>
 </Window>
