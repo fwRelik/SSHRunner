@@ -67,7 +67,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Grid>
-                    <Ellipse x:Name="SSHServiceIndicator" Width="10" Fill="#FF717171" Height="10" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left">
+                    <Ellipse x:Name="SSHServiceIndicator" Width="10" Fill="{Binding SSHServiceStatusIndicator}" Height="10" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left">
                         <Ellipse.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
@@ -88,7 +88,7 @@
                         </TextBlock.RenderTransform>SSH Service</TextBlock>
                 </Grid>
                 <Grid Grid.Column="1">
-                    <Ellipse x:Name="FirewallIndicator" Width="10" Fill="#FF717171" Height="10" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left">
+                    <Ellipse x:Name="FirewallIndicator" Width="10" Fill="{Binding FirewallRuleIndicator}" Height="10" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left">
                         <Ellipse.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
@@ -109,7 +109,7 @@
                         </TextBlock.RenderTransform>Firewall</TextBlock>
                 </Grid>
                 <Grid Grid.Row="1">
-                    <Ellipse x:Name="PackagesIndicator" Width="10" Fill="#FF717171" Height="10" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left">
+                    <Ellipse x:Name="PackagesIndicator" Width="10" Fill="{Binding PackageInstallingStatusIndicator}" Height="10" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left">
                         <Ellipse.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
@@ -130,7 +130,7 @@
                         </TextBlock.RenderTransform>Packages</TextBlock>
                 </Grid>
                 <Grid Grid.Row="1" Grid.Column="1">
-                    <Ellipse x:Name="NetworkIndicator" Width="10" Fill="#FF717171" Height="10" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left">
+                    <Ellipse x:Name="NetworkIndicator" Width="10" Fill="{Binding NetworkStatusIndicator}" Height="10" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left">
                         <Ellipse.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
@@ -226,7 +226,7 @@
                     VerticalAlignment="Bottom" 
                     HorizontalAlignment="Right" 
                     Margin="0,0,0,40">
-                <TextBlock>Start Service</TextBlock>
+                <TextBlock Text="{Binding SSHServiceButton}"></TextBlock>
             </Button>
         </Grid>
     </Grid>

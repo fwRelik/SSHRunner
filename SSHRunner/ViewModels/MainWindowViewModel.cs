@@ -5,11 +5,23 @@ using System.Windows.Input;
 using fwRelik.SSHSetup.Extensions;
 using fwRelik.SSHSetup.Enums;
 using System;
+using System.Threading;
 
 namespace SSHRunner.ViewModels
 {
     internal class MainWindowViewModel : ViewModel
     {
+        #region Services
+
+        private readonly SSHServiceControl _sshServiceControl = new();
+        private readonly FirewallRuleControl _firewallRuleControl = new();
+        private readonly NetworkInfo _networkInfo = new();
+        private readonly PackageControl _packageControl = new();
+
+        #endregion
+
+        #region Fields
+
         #region Window title
 
         /// <summary>Window title</summary>
@@ -23,9 +35,70 @@ namespace SSHRunner.ViewModels
 
         #endregion
 
-        #region Services
+        #region SSH Service status indicator
 
-        private readonly SSHServiceControl _sshServiceControl = new();
+        /// <summary>SSH Service status indicator</summary>
+        private string _sshServiceStatusIndicator = "Red";
+        /// <summary>SSH Service status indicator</summary>
+        public string SSHServiceStatusIndicator
+        {
+            get => _sshServiceStatusIndicator;
+            set => Set(ref _sshServiceStatusIndicator, value);
+        }
+
+        #endregion
+
+        #region Firewall Rule status indicator
+
+        /// <summary>Firewall Rule status indicator</summary>
+        private string _firewallRuleIndicator = "Red";
+        /// <summary>Firewall Rule status indicator</summary>
+        public string FirewallRuleIndicator
+        {
+            get => _firewallRuleIndicator;
+            set => Set(ref _firewallRuleIndicator, value);
+        }
+
+        #endregion
+
+        #region Network status indicator
+
+        /// <summary>Network status indicator</summary>
+        private string _networkStatusIndicator = "Red";
+        /// <summary>Network status indicator</summary>
+        public string NetworkStatusIndicator
+        {
+            get => _networkStatusIndicator;
+            set => Set(ref _networkStatusIndicator, value);
+        }
+
+        #endregion
+
+        #region Package installing status indicator
+
+        /// <summary>Package installing status indicator</summary>
+        private string _packageInstallingStatusIndicator = "Red";
+        /// <summary>Package installing status indicator</summary>
+        public string PackageInstallingStatusIndicator
+        {
+            get => _packageInstallingStatusIndicator;
+            set => Set(ref _packageInstallingStatusIndicator, value);
+        }
+
+        #endregion
+
+        #region SSH Service Button content
+
+        /// <summary>Window title</summary>
+        private string _sshServiceButton = "Start service";
+        /// <summary>Window title</summary>
+        public string SSHServiceButton
+        {
+            get => _sshServiceButton;
+            set => Set(ref _sshServiceButton, value);
+        }
+
+        #endregion
 
         #endregion
 
@@ -48,12 +121,21 @@ namespace SSHRunner.ViewModels
             try
             {
                 if (_sshServiceControl.ServiceStatus == SSHServiceState.Running)
+                {
                     _sshServiceControl.Stop();
-                else _sshServiceControl.Start();
+                    SSHServiceStatusIndicator = "Green";
+                    SSHServiceButton = "Stop service";
+                }
+                else
+                {
+                    _sshServiceControl.Start();
+                    SSHServiceStatusIndicator = "Red";
+                    SSHServiceButton = "Start service";
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("A half unexpected error has occurred, try running the program with administrator privileges.");
             }
         }
 
