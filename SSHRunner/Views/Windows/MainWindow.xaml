@@ -45,7 +45,13 @@
             VerticalAlignment="Top" 
             Grid.Column="9" 
             Background="{x:Null}" 
-            BorderBrush="{x:Null}" FontSize="18" Cursor="Hand"/>
+            BorderBrush="{x:Null}" FontSize="18" Cursor="Hand">
+            <Button.ToolTip>
+                <ToolTip>
+                    Close
+                </ToolTip>
+            </Button.ToolTip>
+        </Button>
 
         <Grid Grid.ColumnSpan="8" Margin="0,40,0,15" Grid.Column="1">
             <Grid.RowDefinitions>
@@ -229,6 +235,7 @@
                     Margin="0,0,0,40">
                 <TextBlock Text="{Binding SSHServiceButton}"></TextBlock>
             </Button>
+            <Button Content="Button" HorizontalAlignment="Left" Margin="60,66,0,0" VerticalAlignment="Top"/>
         </Grid>
     </Grid>
 </Window>

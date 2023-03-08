@@ -6,7 +6,6 @@ using fwRelik.SSHSetup.Extensions;
 using fwRelik.SSHSetup.Enums;
 using System;
 using System.Threading;
-using System.Data;
 using System.Windows.Threading;
 
 namespace SSHRunner.ViewModels
@@ -127,7 +126,6 @@ namespace SSHRunner.ViewModels
                     _sshServiceControl.Stop();
                     SSHServiceStatusIndicator = "Red";
                     SSHServiceButton = "Start service";
-
                 }
                 else
                 {
@@ -158,22 +156,22 @@ namespace SSHRunner.ViewModels
 
             #endregion
 
-            var timer = new DispatcherTimer();
-            timer.Tick += (_, __) =>
-            {
-                if (_networkInfo.GetNetworkConnectionStatus()) NetworkStatusIndicator = "Green";
-                else NetworkStatusIndicator = "Red";
+            //var timer = new DispatcherTimer();
+            //timer.Tick += (_, __) =>
+            //{
+            //    if (_networkInfo.GetNetworkConnectionStatus()) NetworkStatusIndicator = "Green";
+            //    else NetworkStatusIndicator = "Red";
 
-                if (_firewallRuleControl.RuleState) FirewallRuleIndicator = "Green";
-                else FirewallRuleIndicator = "Red";
+            //    if (_firewallRuleControl.RuleState) FirewallRuleIndicator = "Green";
+            //    else FirewallRuleIndicator = "Red";
 
-                if (_packageControl.GetPackagesState().AllPackageInstalling) PackageInstallingStatusIndicator = "Green";
-                else PackageInstallingStatusIndicator = "Red";
-            };
-            timer.Interval = TimeSpan.FromSeconds(1);
-            timer.Start();
+            //    if (_packageControl.GetPackagesState().AllPackageInstalling) PackageInstallingStatusIndicator = "Green";
+            //    else PackageInstallingStatusIndicator = "Red";
+            //};
+            //timer.Interval = TimeSpan.FromSeconds(1);
+            //timer.Start();
 
-            InitializeState();
+            //InitializeState();
         }
 
         private void InitializeState()
