@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:SSHRunner"
              StartupUri="Views/Windows/MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary Source="Resources/Styles/Button.xaml"/>
     </Application.Resources>
 </Application>

@@ -227,15 +227,13 @@
         <Line X1="320" Stroke="#FF444444" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="8"/>
 
         <Grid Grid.ColumnSpan="8" Grid.Column="1" Grid.Row="3" Margin="0,15,0,0">
-            <Button Command="{Binding StartSSHServiceCommand}" 
-                    Width="80" Height="30" 
-                    Cursor="Hand"
+            <Button Style="{StaticResource CustomButtonStyle}" 
+                Command="{Binding StartSSHServiceCommand}" 
                     VerticalAlignment="Bottom" 
                     HorizontalAlignment="Right" 
-                    Margin="0,0,0,40">
-                <TextBlock Text="{Binding SSHServiceButton}"></TextBlock>
+                    Margin="0,0,0,40">     
+                <Button.Content>Start Service</Button.Content>
             </Button>
-            <Button Content="Button" HorizontalAlignment="Left" Margin="60,66,0,0" VerticalAlignment="Top"/>
         </Grid>
     </Grid>
 </Window>
