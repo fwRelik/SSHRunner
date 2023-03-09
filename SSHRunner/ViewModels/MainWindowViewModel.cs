@@ -7,6 +7,13 @@ using fwRelik.SSHSetup.Enums;
 using System;
 using System.Threading;
 using System.Windows.Threading;
+using fwRelik.SSHSetup.Structs;
+using System.Collections;
+using System.Linq;
+using System.Net;
+using System.Net.NetworkInformation;
+using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace SSHRunner.ViewModels
 {
@@ -90,13 +97,26 @@ namespace SSHRunner.ViewModels
 
         #region SSH Service Button content
 
-        /// <summary>Window title</summary>
+        /// <summary>SSH Service Button content</summary>
         private string _sshServiceButton = "Start service";
-        /// <summary>Window title</summary>
+        /// <summary>SSH Service Button content</summary>
         public string SSHServiceButton
         {
             get => _sshServiceButton;
             set => Set(ref _sshServiceButton, value);
+        }
+
+        #endregion     
+
+        #region Connections
+
+        /// <summary>Connections</summary>
+        private List<ConnectionEntity>? _connections;
+        /// <summary>Connections</summary>
+        public List<ConnectionEntity>? Connections
+        {
+            get => _connections;
+            set => Set(ref _connections, value);
         }
 
         #endregion
@@ -155,6 +175,13 @@ namespace SSHRunner.ViewModels
             StartSSHServiceCommand = new LambdaCommand(OnStartSSHServiceCommandExecuted, CanStartSSHServiceCommandExecute);
 
             #endregion
+
+            Connections = Enumerable.Range(0, 10).Select(i => new ConnectionEntity
+            {
+                LocalAddress = new IPEndPoint(IPAddress.Parse($"192.168.1.10{i}"), i),
+                RemoteAddress = new IPEndPoint(IPAddress.Parse($"244.187.16.1{i}"), i),
+                State = TcpState.Established
+            }).ToList();
 
             //var timer = new DispatcherTimer();
             //timer.Tick += (_, __) =>
