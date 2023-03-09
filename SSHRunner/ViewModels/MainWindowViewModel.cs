@@ -14,6 +14,8 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
+using SSHRunner.Services.Base;
+using SSHRunner.Services;
 
 namespace SSHRunner.ViewModels
 {
@@ -21,10 +23,14 @@ namespace SSHRunner.ViewModels
     {
         #region Services
 
-        private readonly SSHServiceControl _sshServiceControl = new();
-        private readonly FirewallRuleControl _firewallRuleControl = new();
-        private readonly NetworkInfo _networkInfo = new();
-        private readonly PackageControl _packageControl = new();
+        //private readonly SSHServiceControl _sshServiceControl = new();
+        private readonly SSHService _sshService = new();
+        //private readonly FirewallRuleControl _firewallRuleControl = new();
+        private readonly FirewallService _firewallService = new();
+        //private readonly NetworkInfo _networkInfo = new();
+        private readonly NetworkService _networkService = new();
+        //private readonly PackageControl _packageControl = new();
+        private readonly PackageService _packageService = new();
 
         #endregion
 
@@ -98,7 +104,7 @@ namespace SSHRunner.ViewModels
         #region SSH Service Button content
 
         /// <summary>SSH Service Button content</summary>
-        private string _sshServiceButton = "Start service";
+        private string _sshServiceButton = "Start Service";
         /// <summary>SSH Service Button content</summary>
         public string SSHServiceButton
         {
@@ -139,27 +145,10 @@ namespace SSHRunner.ViewModels
         public bool CanStartSSHServiceCommandExecute(object p) => true;
         public void OnStartSSHServiceCommandExecuted(object p)
         {
-            try
-            {
-                if (_sshServiceControl.ServiceStatus == SSHServiceState.Running)
-                {
-                    _sshServiceControl.Stop();
-                    SSHServiceStatusIndicator = "Red";
-                    SSHServiceButton = "Start service";
-                }
-                else
-                {
-                    _sshServiceControl.Start();
-                    SSHServiceStatusIndicator = "Green";
-                    SSHServiceButton = "Stop service";
-                }
-            }
-            catch (Exception ex)
-            {
-                SSHServiceStatusIndicator = "Red";
-                SSHServiceButton = "Start service";
-                MessageBox.Show("A half unexpected error has occurred, try running the program with administrator privileges.");
-            }
+            if (_sshService.ServiceStatus) _sshService.ServiceStop();
+            else _sshService.ServiceStart();
+
+            ServiceStartButtonContentChange();
         }
 
         #endregion
@@ -186,14 +175,12 @@ namespace SSHRunner.ViewModels
             //var timer = new DispatcherTimer();
             //timer.Tick += (_, __) =>
             //{
-            //    if (_networkInfo.GetNetworkConnectionStatus()) NetworkStatusIndicator = "Green";
-            //    else NetworkStatusIndicator = "Red";
+            //    NetworkStatusIndicator = _networkService.GetIndicator();
+            //    FirewallRuleIndicator = _firewallService.GetIndicator();
+            //    PackageInstallingStatusIndicator = _packageService.GetIndicator();
+            //    SSHServiceStatusIndicator = _sshService.GetIndicator();
 
-            //    if (_firewallRuleControl.RuleState) FirewallRuleIndicator = "Green";
-            //    else FirewallRuleIndicator = "Red";
-
-            //    if (_packageControl.GetPackagesState().AllPackageInstalling) PackageInstallingStatusIndicator = "Green";
-            //    else PackageInstallingStatusIndicator = "Red";
+            //    ServiceStartButtonContentChange();
             //};
             //timer.Interval = TimeSpan.FromSeconds(1);
             //timer.Start();
@@ -203,22 +190,18 @@ namespace SSHRunner.ViewModels
 
         private void InitializeState()
         {
-            new Thread(() =>
-            {
-                try
-                {
-                    _packageControl.CheckPackageForInitializaitonValue();
-                }
-                catch (Exception ex) { MessageBox.Show(ex.Message); }
-            }).Start();
-            new Thread(() =>
-            {
-                try
-                {
-                    _firewallRuleControl.GetFirewallRule();
-                }
-                catch (Exception ex) { MessageBox.Show(ex.Message); }
-            }).Start();
+            new Thread(() => _packageService.CheckServiceStatus()).Start();
+
+            new Thread(() => _firewallService.CheckServiceStatus()).Start();
+
+            new Thread(() => _sshService.CheckServiceStatus()).Start();
+
+            new Thread(() => _networkService.CheckServiceStatus()).Start();
+        }
+
+        private void ServiceStartButtonContentChange()
+        {
+            SSHServiceButton = _sshService.ServiceStatus ? "Stop Service" : "Start Service";
         }
     }
 }

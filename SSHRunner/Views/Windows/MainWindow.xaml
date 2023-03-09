@@ -60,7 +60,7 @@
             </Grid.RowDefinitions>
 
             <Label Foreground="#FF909090" BorderBrush="#FF909090" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18" Margin="-5,0,0,0">
-                <TextBlock TextDecorations="Underline">Module state</TextBlock>
+                <TextBlock TextDecorations="Underline">Module State</TextBlock>
             </Label>
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
@@ -237,12 +237,11 @@
 
         <Grid Grid.ColumnSpan="8" Grid.Column="1" Grid.Row="3" Margin="0,15,0,0">
             <Button Style="{StaticResource CustomButtonStyle}" 
-                Command="{Binding StartSSHServiceCommand}" 
+                    Command="{Binding StartSSHServiceCommand}" 
+                    Content="{Binding SSHServiceButton}"
                     VerticalAlignment="Bottom" 
                     HorizontalAlignment="Right" 
-                    Margin="0,0,0,40">
-                <Button.Content>Start Service</Button.Content>
-            </Button>
+                    Margin="0,0,0,40"/>
         </Grid>
     </Grid>
 </Window>

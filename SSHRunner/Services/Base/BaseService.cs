@@ -1,6 +1,6 @@
-﻿namespace SSHRunner.Models.Base
+﻿namespace SSHRunner.Services.Base
 {
-    internal abstract class BaseModel
+    internal abstract class BaseService
     {
         public bool ServiceStatus = false;
 
@@ -8,9 +8,9 @@
         public abstract void ServiceStop();
         public abstract void CheckServiceStatus();
 
-        protected string GetIndicator()
+        public string GetIndicator()
         {
-            return ServiceStatus ? "Green" : "Red";
+            return ServiceStatus ? "Lime" : "Red";
         }
     }
 }
