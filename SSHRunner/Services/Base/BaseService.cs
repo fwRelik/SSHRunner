@@ -10,7 +10,7 @@
 
         public string GetIndicator()
         {
-            return ServiceStatus ? "Lime" : "Red";
+            return ServiceStatus ? "Lime" : "DarkRed";
         }
     }
 }

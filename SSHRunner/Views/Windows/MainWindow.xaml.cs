@@ -1,5 +1,4 @@
-﻿using System.Threading; 
-using System.Windows; 
+﻿using System.Windows; 
 
 namespace SSHRunner
 {
@@ -11,11 +10,6 @@ namespace SSHRunner
         public MainWindow()
         {
             InitializeComponent();
-        }
-
-        private void DataGrid_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-
         }
     }
 }

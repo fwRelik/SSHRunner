@@ -2,21 +2,13 @@
 using SSHRunner.ViewModels.Base;
 using System.Windows;
 using System.Windows.Input;
-using fwRelik.SSHSetup.Extensions;
-using fwRelik.SSHSetup.Enums;
 using System;
 using System.Threading;
 using System.Windows.Threading;
 using fwRelik.SSHSetup.Structs;
-using System.Collections;
 using System.Linq;
-using System.Net;
-using System.Net.NetworkInformation;
-using System.Collections.ObjectModel;
 using System.Collections.Generic;
-using SSHRunner.Services.Base;
 using SSHRunner.Services;
-using System.Text;
 
 namespace SSHRunner.ViewModels
 {
@@ -32,6 +24,8 @@ namespace SSHRunner.ViewModels
         #endregion
 
         #region Fields
+
+        private static string _defaultIndicator = "DarkRed";
 
         #region Window title
 
@@ -49,7 +43,7 @@ namespace SSHRunner.ViewModels
         #region SSH Service status indicator
 
         /// <summary>SSH Service status indicator</summary>
-        private string _sshServiceStatusIndicator = "Red";
+        private string _sshServiceStatusIndicator = _defaultIndicator;
         /// <summary>SSH Service status indicator</summary>
         public string SSHServiceStatusIndicator
         {
@@ -62,7 +56,7 @@ namespace SSHRunner.ViewModels
         #region Firewall Rule status indicator
 
         /// <summary>Firewall Rule status indicator</summary>
-        private string _firewallRuleIndicator = "Red";
+        private string _firewallRuleIndicator = _defaultIndicator;
         /// <summary>Firewall Rule status indicator</summary>
         public string FirewallRuleIndicator
         {
@@ -75,7 +69,7 @@ namespace SSHRunner.ViewModels
         #region Network status indicator
 
         /// <summary>Network status indicator</summary>
-        private string _networkStatusIndicator = "Red";
+        private string _networkStatusIndicator = _defaultIndicator;
         /// <summary>Network status indicator</summary>
         public string NetworkStatusIndicator
         {
@@ -88,7 +82,7 @@ namespace SSHRunner.ViewModels
         #region Package installing status indicator
 
         /// <summary>Package installing status indicator</summary>
-        private string _packageInstallingStatusIndicator = "Red";
+        private string _packageInstallingStatusIndicator = _defaultIndicator;
         /// <summary>Package installing status indicator</summary>
         public string PackageInstallingStatusIndicator
         {
@@ -189,6 +183,38 @@ namespace SSHRunner.ViewModels
 
         #endregion
 
+        #region PackageInstallCommand
+
+        public ICommand PackageInstallCommand { get; }
+        public bool CanPackageInstallCommandExecute(object p) => true;
+        public void OnPackageInstallCommandExecuted(object p) => _packageService.Install();
+
+        #endregion
+
+        #region PackageUnInstallCommand
+
+        public ICommand PackageUnInstallCommand { get; }
+        public bool CanPackageUnInstallCommandExecute(object p) => true;
+        public void OnPackageUnInstallCommandExecuted(object p) => _packageService.UnInstall();
+
+        #endregion
+
+        #region FirewallRuleSetCommand
+
+        public ICommand FirewallRuleSetCommand { get; }
+        public bool CanFirewallRuleSetCommandExecute(object p) => true;
+        public void OnFirewallRuleSetCommandExecuted(object p) => _firewallService.Set();
+
+        #endregion
+
+        #region FirewallRuleRemoveCommand
+
+        public ICommand FirewallRuleRemoveCommand { get; }
+        public bool CanFirewallRuleRemoveCommandExecute(object p) => true;
+        public void OnFirewallRuleRemoveCommandExecuted(object p) => _firewallService.Remove();
+
+        #endregion
+
         #endregion
 
         public MainWindowViewModel()
@@ -197,6 +223,10 @@ namespace SSHRunner.ViewModels
 
             CloseApplicationCommand = new LambdaCommand(OnCloseApplicationCommandExecuted, CanCloseApplicationCommandExecute);
             StartSSHServiceCommand = new LambdaCommand(OnStartSSHServiceCommandExecuted, CanStartSSHServiceCommandExecute);
+            PackageInstallCommand = new LambdaCommand(OnPackageInstallCommandExecuted, CanPackageInstallCommandExecute);
+            PackageUnInstallCommand = new LambdaCommand(OnPackageUnInstallCommandExecuted, CanPackageUnInstallCommandExecute);
+            FirewallRuleSetCommand = new LambdaCommand(OnFirewallRuleSetCommandExecuted, CanFirewallRuleSetCommandExecute);
+            FirewallRuleRemoveCommand = new LambdaCommand(OnFirewallRuleRemoveCommandExecuted, CanFirewallRuleRemoveCommandExecute);
 
             #endregion
 
@@ -205,29 +235,24 @@ namespace SSHRunner.ViewModels
             LocalIPAddresses = _networkService.Service.IpAddresses.Select(i => i.ToString()).ToArray();
             Connections = _networkService.Service.GetConnections().Select(i => i.Value).ToList();
 
-            //Connections = Enumerable.Range(0, 10).Select(i => new ConnectionEntity
-            //{
-            //    LocalAddress = new IPEndPoint(IPAddress.Parse($"192.168.1.10{i}"), i),
-            //    RemoteAddress = new IPEndPoint(IPAddress.Parse($"244.187.16.1{i}"), i),
-            //    State = TcpState.Established
-            //}).ToList();
+            var timer = new DispatcherTimer();
+            timer.Tick += (_, __) =>
+            {
+                FirewallRuleIndicator = _firewallService.GetIndicator();
+                PackageInstallingStatusIndicator = _packageService.GetIndicator();
+                SSHServiceStatusIndicator = _sshService.GetIndicator();
 
-            //var timer = new DispatcherTimer();
-            //timer.Tick += (_, __) =>
-            //{
-            //    NetworkStatusIndicator = _networkService.GetIndicator();
-            //    FirewallRuleIndicator = _firewallService.GetIndicator();
-            //    PackageInstallingStatusIndicator = _packageService.GetIndicator();
-            //    SSHServiceStatusIndicator = _sshService.GetIndicator();
+                _networkService.CheckServiceStatus();
+                NetworkStatusIndicator = _networkService.GetIndicator();
 
-            //    Connections = _networkService.Service.GetConnections().Select(i => i.Value).ToList();
+                Connections = _networkService.Service.GetConnections().Select(i => i.Value).ToList();
 
-            //    ServiceStartButtonContentChange();
-            //};
-            //timer.Interval = TimeSpan.FromSeconds(1);
-            //timer.Start();
+                ServiceStartButtonContentChange();
+            };
+            timer.Interval = TimeSpan.FromSeconds(2);
+            timer.Start();
 
-            //InitializeState();
+            InitializeState();
         }
 
         private void InitializeState()
@@ -237,8 +262,6 @@ namespace SSHRunner.ViewModels
             new Thread(() => _firewallService.CheckServiceStatus()).Start();
 
             new Thread(() => _sshService.CheckServiceStatus()).Start();
-
-            new Thread(() => _networkService.CheckServiceStatus()).Start();
         }
 
         private void ServiceStartButtonContentChange()

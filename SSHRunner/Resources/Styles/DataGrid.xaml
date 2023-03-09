@@ -174,7 +174,7 @@
     <Style x:Key="CustomDataGridStyle" TargetType="{x:Type DataGrid}">
         <Setter Property="Height" Value="80"/>
         <Setter Property="Background" Value="{x:Null}"/>
-        <Setter Property="Foreground" Value="#FF909090"/>
+        <Setter Property="Foreground" Value="#FFC2C2C2"/>
         <Setter Property="BorderBrush" Value="{x:Null}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="RowBackground" Value="{x:Null}"/>
