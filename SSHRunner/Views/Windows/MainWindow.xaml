@@ -161,7 +161,7 @@
 
         <Line X1="320" Stroke="#FF444444" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="8"/>
 
-        <Grid Grid.ColumnSpan="8" Grid.Column="1" Grid.Row="1" Margin="0,15,0,15">
+        <Grid Grid.ColumnSpan="8" Grid.Column="1" Grid.Row="1" Margin="0,0,0,10">
             <Grid.RowDefinitions>
                 <RowDefinition  Height="40"/>
                 <RowDefinition/>
@@ -172,9 +172,9 @@
             </Label>
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -182,19 +182,30 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock FontWeight="SemiBold" Foreground="#FF909090">Host name:</TextBlock>
-                <TextBlock x:Name="TextBlock_HostName" FontWeight="Light" Foreground="#FF909090" Grid.Column="1">LocalMachine</TextBlock>
+                <TextBlock x:Name="TextBlock_HostName" Text="{Binding HostName}" FontWeight="Light" Foreground="#FF909090" Grid.Column="1"/>
 
                 <TextBlock FontWeight="SemiBold" Foreground="#FF909090" Grid.Row="1">User name:</TextBlock>
-                <TextBlock x:Name="TextBlock_UserName" FontWeight="Light" Foreground="#FF909090" Grid.Column="1" Grid.Row="1">UserAdmin</TextBlock>
+                <TextBlock x:Name="TextBlock_UserName" Text="{Binding UserName}" FontWeight="Light" Foreground="#FF909090" Grid.Column="1" Grid.Row="1"/>
 
                 <TextBlock FontWeight="SemiBold" Foreground="#FF909090" Grid.Row="2">Server local IP address:</TextBlock>
-                <TextBlock x:Name="TextBlock_LocalAddress" FontWeight="Light" Foreground="#FF909090" Grid.Column="1" Grid.Row="3">192.168.1.110</TextBlock>
+                <DataGrid Style="{StaticResource CustomDataGridStyle}"
+                          Height="Auto"
+                          ItemsSource="{Binding LocalIPAddresses}"
+                          IsReadOnly="True"
+                          AutoGenerateColumns="False"
+                          Grid.Row="2"
+                          Grid.Column="1">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Width="Auto" Binding="{Binding}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <!--<TextBlock x:Name="TextBlock_LocalAddress" Text="{Binding LocalIPAddresses}" FontWeight="Light" Foreground="#FF909090" Grid.Column="1" Grid.Row="3"/>-->
             </Grid>
         </Grid>
 
         <Line X1="320" Stroke="#FF444444" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="8"/>
 
-        <Grid Grid.ColumnSpan="8" Grid.Column="1" Grid.Row="2" Margin="0,15,0,0" Grid.RowSpan="2" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+        <Grid Grid.ColumnSpan="8" Grid.Column="1" Grid.Row="2" Margin="0,0,0,0" Grid.RowSpan="2" ScrollViewer.HorizontalScrollBarVisibility="Auto">
             <Grid.RowDefinitions>
                 <RowDefinition Height="40"/>
                 <RowDefinition MaxHeight="200" Height="Auto"/>

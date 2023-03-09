@@ -16,6 +16,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using SSHRunner.Services.Base;
 using SSHRunner.Services;
+using System.Text;
 
 namespace SSHRunner.ViewModels
 {
@@ -23,13 +24,9 @@ namespace SSHRunner.ViewModels
     {
         #region Services
 
-        //private readonly SSHServiceControl _sshServiceControl = new();
         private readonly SSHService _sshService = new();
-        //private readonly FirewallRuleControl _firewallRuleControl = new();
         private readonly FirewallService _firewallService = new();
-        //private readonly NetworkInfo _networkInfo = new();
         private readonly NetworkService _networkService = new();
-        //private readonly PackageControl _packageControl = new();
         private readonly PackageService _packageService = new();
 
         #endregion
@@ -112,7 +109,46 @@ namespace SSHRunner.ViewModels
             set => Set(ref _sshServiceButton, value);
         }
 
-        #endregion     
+        #endregion
+
+        #region Host name
+
+        /// <summary>Host name</summary>
+        private string _hostName = "Undefined";
+        /// <summary>Host name</summary>
+        public string HostName
+        {
+            get => _hostName;
+            set => Set(ref _hostName, value);
+        }
+
+        #endregion
+
+        #region User name
+
+        /// <summary>User name</summary>
+        private string _userName = "Undefined";
+        /// <summary>User name</summary>
+        public string UserName
+        {
+            get => _userName;
+            set => Set(ref _userName, value);
+        }
+
+        #endregion
+
+        #region Server local IP addresses
+
+        /// <summary>Server local IP addresses</summary>
+        private string[]? _localIPAddresses;
+        /// <summary>Server local IP addresses</summary>
+        public string[]? LocalIPAddresses
+        {
+            get => _localIPAddresses;
+            set => Set(ref _localIPAddresses, value);
+        }
+
+        #endregion
 
         #region Connections
 
@@ -157,7 +193,6 @@ namespace SSHRunner.ViewModels
 
         public MainWindowViewModel()
         {
-
             #region Command
 
             CloseApplicationCommand = new LambdaCommand(OnCloseApplicationCommandExecuted, CanCloseApplicationCommandExecute);
@@ -165,12 +200,17 @@ namespace SSHRunner.ViewModels
 
             #endregion
 
-            Connections = Enumerable.Range(0, 10).Select(i => new ConnectionEntity
-            {
-                LocalAddress = new IPEndPoint(IPAddress.Parse($"192.168.1.10{i}"), i),
-                RemoteAddress = new IPEndPoint(IPAddress.Parse($"244.187.16.1{i}"), i),
-                State = TcpState.Established
-            }).ToList();
+            HostName = _networkService.Service.HostName;
+            UserName = _networkService.Service.UserName;
+            LocalIPAddresses = _networkService.Service.IpAddresses.Select(i => i.ToString()).ToArray();
+            Connections = _networkService.Service.GetConnections().Select(i => i.Value).ToList();
+
+            //Connections = Enumerable.Range(0, 10).Select(i => new ConnectionEntity
+            //{
+            //    LocalAddress = new IPEndPoint(IPAddress.Parse($"192.168.1.10{i}"), i),
+            //    RemoteAddress = new IPEndPoint(IPAddress.Parse($"244.187.16.1{i}"), i),
+            //    State = TcpState.Established
+            //}).ToList();
 
             //var timer = new DispatcherTimer();
             //timer.Tick += (_, __) =>
@@ -179,6 +219,8 @@ namespace SSHRunner.ViewModels
             //    FirewallRuleIndicator = _firewallService.GetIndicator();
             //    PackageInstallingStatusIndicator = _packageService.GetIndicator();
             //    SSHServiceStatusIndicator = _sshService.GetIndicator();
+
+            //    Connections = _networkService.Service.GetConnections().Select(i => i.Value).ToList();
 
             //    ServiceStartButtonContentChange();
             //};
