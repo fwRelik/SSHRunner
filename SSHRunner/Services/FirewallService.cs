@@ -42,7 +42,7 @@ namespace SSHRunner.Services
             {
                 ServiceStatus = Service.GetFirewallRule().FirewallRuleStatus;
             }
-            catch (Exception ex) { ErrorHandler.InsufficientRights(ex); }
+            catch (Exception ex) { ErrorHandler.ServiceNotFound(ex); }
         }
 
         public override void ServiceStart()

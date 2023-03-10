@@ -5,7 +5,7 @@ namespace SSHRunner.Helper
 {
     public class ErrorHandler
     {
-        public static void InsufficientRights(Exception ex)
+        public static void ServiceNotFound(Exception ex)
         {
             string message = "Service name not found or insufficient rights." +
                 "\n\nIf you see this message when you first start the program, then ignore it.";
@@ -15,6 +15,18 @@ namespace SSHRunner.Helper
             MessageBox.Show($"{message}\n\nError: {ex.Message}");
 #else
             MessageBox.Show(message, caption, MessageBoxButton.OK, MessageBoxImage.Information);
+#endif
+        }
+
+        public static void InsufficientRights(Exception ex)
+        {
+            string message = "Insufficient rights.";
+            string caption = "Warning";
+
+#if DEBUG
+            MessageBox.Show($"{message}\n\nError: {ex.Message}");
+#else
+            MessageBox.Show(message, caption, MessageBoxButton.OK, MessageBoxImage.Warning);
 #endif
         }
 

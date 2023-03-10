@@ -9,6 +9,8 @@ using fwRelik.SSHSetup.Structs;
 using System.Linq;
 using System.Collections.Generic;
 using SSHRunner.Services;
+using System.Security.Principal;
+using SSHRunner.Helper;
 
 namespace SSHRunner.ViewModels
 {
@@ -234,6 +236,14 @@ namespace SSHRunner.ViewModels
             UserName = _networkService.Service.UserName;
             LocalIPAddresses = _networkService.Service.IpAddresses.Select(i => i.ToString()).ToArray();
             Connections = _networkService.Service.GetConnections().Select(i => i.Value).ToList();
+
+            var principal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
+            if (!principal.IsInRole(WindowsBuiltInRole.Administrator))
+            {
+                ErrorHandler.InsufficientRights(new Exception());
+                Application.Current.Shutdown();
+                return;
+            }
 
             var timer = new DispatcherTimer();
             timer.Tick += (_, __) =>

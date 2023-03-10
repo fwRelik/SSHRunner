@@ -19,7 +19,7 @@ namespace SSHRunner.Services
                     Service.PackageManagment();
                     ServiceStatus = true;
                 }
-                catch (Exception ex) { ErrorHandler.InsufficientRights(ex); }
+                catch (Exception ex) { ErrorHandler.ServiceNotFound(ex); }
             }).Start();
         }
 
@@ -32,7 +32,7 @@ namespace SSHRunner.Services
                     Service.PackageManagment(false);
                     ServiceStatus = false;
                 }
-                catch (Exception ex) { ErrorHandler.InsufficientRights(ex); }
+                catch (Exception ex) { ErrorHandler.ServiceNotFound(ex); }
             }).Start();
         }
 
@@ -47,7 +47,7 @@ namespace SSHRunner.Services
             {
                 ServiceStatus = Service.CheckPackageForInitializaitonValue();
             }
-            catch (Exception ex) { ErrorHandler.InsufficientRights(ex); }
+            catch (Exception ex) { ErrorHandler.ServiceNotFound(ex); }
         }
 
         public override void ServiceStart()

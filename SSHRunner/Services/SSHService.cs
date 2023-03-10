@@ -18,7 +18,7 @@ namespace SSHRunner.Services
                 Service.GetServiceStatus();
                 ServiceStatus = (Service.ServiceStatus == SSHServiceState.Running);
             }
-            catch (Exception ex) { ErrorHandler.InsufficientRights(ex); }
+            catch (Exception ex) { ErrorHandler.ServiceNotFound(ex); }
 }
 
         public override void ServiceStart()
@@ -28,7 +28,7 @@ namespace SSHRunner.Services
                 Service.Start();
                 ServiceStatus = (Service.ServiceStatus == SSHServiceState.Running);
             }
-            catch (Exception ex) { ErrorHandler.InsufficientRights(ex); }
+            catch (Exception ex) { ErrorHandler.ServiceNotFound(ex); }
         }
 
         public override void ServiceStop()
@@ -38,7 +38,7 @@ namespace SSHRunner.Services
                 Service.Stop();
                 ServiceStatus = (Service.ServiceStatus == SSHServiceState.Running);
             }
-            catch (Exception ex) { ErrorHandler.InsufficientRights(ex); }
+            catch (Exception ex) { ErrorHandler.ServiceNotFound(ex); }
         }
     }
 }
