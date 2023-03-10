@@ -5,6 +5,24 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>Assets\byfwRelik.ico</ApplicationIcon>
+    <Title>SSHRunner</Title>
+    <Version>0.1.0</Version>
+    <Company>fwRelik</Company>
+    <Authors>fwRelik</Authors>
+    <Description>Setting SSH</Description>
+    <PackageIcon>byfwRelik514x514.jpg</PackageIcon>
+    <PackageProjectUrl>https://github.com/fwRelik/SSHRunner</PackageProjectUrl>
+    <RepositoryType>https://github.com/fwRelik/SSHRunner</RepositoryType>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\byfwRelik.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="fwRelik.SSHSetup" Version="1.0.1" />
+  </ItemGroup>
 
 </Project>
