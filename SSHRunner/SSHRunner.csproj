@@ -8,7 +8,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>Assets\byfwRelik.ico</ApplicationIcon>
     <Title>SSHRunner</Title>
-    <Version>0.1.0</Version>
+    <Version>0.1.1</Version>
     <Company>fwRelik</Company>
     <Authors>fwRelik</Authors>
     <Description>Setting SSH</Description>
@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="fwRelik.SSHSetup" Version="1.0.1" />
+    <PackageReference Include="fwRelik.SSHSetup" Version="1.0.2" />
   </ItemGroup>
 
 </Project>
