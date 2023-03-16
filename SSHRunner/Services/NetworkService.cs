@@ -12,15 +12,5 @@ namespace SSHRunner.Services
         {
             ServiceStatus = Service.GetNetworkConnectionStatus();
         }
-
-        public override void ServiceStart()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void ServiceStop()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

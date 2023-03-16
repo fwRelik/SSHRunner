@@ -44,15 +44,5 @@ namespace SSHRunner.Services
             }
             catch (Exception ex) { ErrorHandler.ServiceNotFound(ex); }
         }
-
-        public override void ServiceStart()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void ServiceStop()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

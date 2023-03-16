@@ -3,7 +3,6 @@ using fwRelik.SSHSetup.Extensions;
 using SSHRunner.Helper;
 using SSHRunner.Services.Base;
 using System;
-using System.Windows;
 
 namespace SSHRunner.Services
 {
