@@ -237,32 +237,35 @@ namespace SSHRunner.ViewModels
             LocalIPAddresses = _networkService.Service.IpAddresses.Select(i => i.ToString()).ToArray();
             Connections = _networkService.Service.GetConnections().Select(i => i.Value).ToList();
 
-            var principal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
-            if (!principal.IsInRole(WindowsBuiltInRole.Administrator))
+            if (!App.IsDesignMode)
             {
-                ErrorHandler.InsufficientRights(new Exception());
-                Application.Current.Shutdown();
-                return;
+                var principal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
+                if (!principal.IsInRole(WindowsBuiltInRole.Administrator))
+                {
+                    ErrorHandler.InsufficientRights(new Exception());
+                    Application.Current.Shutdown();
+                    return;
+                }
+
+                var timer = new DispatcherTimer();
+                timer.Tick += (_, __) =>
+                {
+                    FirewallRuleIndicator = _firewallService.GetIndicator();
+                    PackageInstallingStatusIndicator = _packageService.GetIndicator();
+                    SSHServiceStatusIndicator = _sshService.GetIndicator();
+
+                    _networkService.CheckServiceStatus();
+                    NetworkStatusIndicator = _networkService.GetIndicator();
+
+                    Connections = _networkService.Service.GetConnections().Select(i => i.Value).ToList();
+
+                    ServiceStartButtonContentChange();
+                };
+                timer.Interval = TimeSpan.FromSeconds(2);
+                timer.Start();
+
+                InitializeState();
             }
-
-            var timer = new DispatcherTimer();
-            timer.Tick += (_, __) =>
-            {
-                FirewallRuleIndicator = _firewallService.GetIndicator();
-                PackageInstallingStatusIndicator = _packageService.GetIndicator();
-                SSHServiceStatusIndicator = _sshService.GetIndicator();
-
-                _networkService.CheckServiceStatus();
-                NetworkStatusIndicator = _networkService.GetIndicator();
-
-                Connections = _networkService.Service.GetConnections().Select(i => i.Value).ToList();
-
-                ServiceStartButtonContentChange();
-            };
-            timer.Interval = TimeSpan.FromSeconds(2);
-            timer.Start();
-
-            InitializeState();
         }
 
         private void InitializeState()
